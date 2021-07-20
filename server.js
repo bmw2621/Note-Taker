@@ -1,35 +1,32 @@
-//Installing npm packages that will help with functionality of the app  
+//Installing npm packages that will help with functionality of the app
+const express = require("express");
 
-// const { json } = require('body-parser');
-const express = require('express'); 
+// Import routes
+const routesApi = require("./Routes/routesApi");
+const routesHtml = require("./Routes/routesHtml");
 
+// Initialize Express application
 const app = express();
-// const { appendFile } = require('fs');
-const routesApi = require('./Routes/routesApi');
-const routesHtml = require('./Routes/routesHtml'); 
 
+//Setting up the port
+const PORT = process.env.PORT || 3001;
 
-//Setting up the port  
-const PORT = process.env.PORT||3001;  
+// Setting up middleware to serve static files and parse request body to json
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.static("public"));
 
-// server.listen(3000, 'localhost');
-// server.on('listening', function() {
-//     console.log('Express server started on port %s at %s', server.address().PORT, server.address().address);
-// });
-//Constructing the express app to be broken down in the data  
+// Use imported routes
+app.use("/api", routesApi);
+// app.use("/", routesHtml);
 
-app.use(express.urlencoded({extended:true})); 
-app.use(express.json()); 
-app.use(express.static('public'));  
-app.use('/api',routesApi); 
-app.use('/',routesHtml);
+// This has already been accomplised in lines above
+// Ive never seen this syntax before
 
-//Setting up the routes that the app will require . 
-app.use(require('./Routes/routesApi'))(app); 
-app.use(require('./Routes/routesHtml'))(app); 
+// app.use(require('./Routes/routesApi'))(app);
+// app.use(require('./Routes/routesHtml'))(app);
 
-//Starting up the server  
-
-app.listen(PORT, function(){ 
-    console.log(`Server is working on PORT:${PORT}`);
+//Starting up the server
+app.listen(PORT, function () {
+  console.log(`Server is working on PORT:${PORT}`);
 });
