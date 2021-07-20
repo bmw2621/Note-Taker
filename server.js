@@ -3,7 +3,6 @@ const express = require("express");
 
 // Import routes
 const routesApi = require("./Routes/routesApi");
-const routesHtml = require("./Routes/routesHtml");
 
 // Initialize Express application
 const app = express();
@@ -18,13 +17,6 @@ app.use(express.static("public"));
 
 // Use imported routes
 app.use("/api", routesApi);
-// app.use("/", routesHtml);
-
-// This has already been accomplised in lines above
-// Ive never seen this syntax before
-
-// app.use(require('./Routes/routesApi'))(app);
-// app.use(require('./Routes/routesHtml'))(app);
 
 //Starting up the server
 app.listen(PORT, function () {
